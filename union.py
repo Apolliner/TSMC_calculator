@@ -1,7 +1,12 @@
 import sys
 from PyQt5.Qt import QPushButton, QGridLayout
 from PyQt5.QtWidgets import QMainWindow, QTabWidget, QVBoxLayout, QWidget, QLabel, QLineEdit, QApplication
+from PyQt5.Qt import QApplication
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtWidgets import QWidget, QLineEdit
 
+import sys
 
 class App(QMainWindow):
 
@@ -43,13 +48,19 @@ class StandardCalculator(QWidget):
     def __init__(self):
         super().__init__()
 
+        reg_ex = QRegExp("[0-9.]{200}")
+
         self.L = QLineEdit()
+        self.L.setValidator(QRegExpValidator(reg_ex, self.L))
         self.v1 = QLineEdit()
+        self.v1.setValidator(QRegExpValidator(reg_ex, self.v1))
         self.v2 = QLineEdit()
+        self.v2.setValidator(QRegExpValidator(reg_ex, self.v2))
         self.t1 = QLabel('-')
         self.t2 = QLabel('-')
         self.T1 = QLabel('-')
         self.T2 = QLabel('-')
+
 
         calc_button = QPushButton('Рассчёт', self)
         clear_button = QPushButton('Очистить', self)
@@ -97,20 +108,35 @@ class StandardCalculator(QWidget):
             t2 = L/(v2/60)
             T1 = t1 + t2 + 2
             T2 = t1 + t2 + 3
+            self.t1.setStyleSheet('color: black')
+            self.t2.setStyleSheet('color: black')
+            self.T1.setStyleSheet('color: black')
+            self.T2.setStyleSheet('color: black')
+
             self.t1.setText(str(round(t1, 2)))
             self.t2.setText(str(round(t2, 2)))
             self.T1.setText(str(round(T1, 2)))
             self.T2.setText(str(round(T2, 2)))
         except:
-            self.t1.setText('Wrong Input')
-            self.t2.setText('Wrong Input')
-            self.T1.setText('Wrong Input')
-            self.T2.setText('Wrong Input')
+            self.t1.setStyleSheet('color: red')
+            self.t2.setStyleSheet('color: red')
+            self.T1.setStyleSheet('color: red')
+            self.T2.setStyleSheet('color: red')
+
+            self.t1.setText('Некорректный ввод')
+            self.t2.setText('Некорректный ввод')
+            self.T1.setText('Некорректный ввод')
+            self.T2.setText('Некорректный ввод')
+
 
     def clear_action(self):
         self.L.clear()
         self.v1.clear()
         self.v2.clear()
+        self.t1.setStyleSheet('color: black')
+        self.t2.setStyleSheet('color: black')
+        self.T1.setStyleSheet('color: black')
+        self.T2.setStyleSheet('color: black')
         self.t1.setText('-')
         self.t2.setText('-')
         self.T1.setText('-')
@@ -122,12 +148,20 @@ class AdvancedCalculator(QWidget):
     def __init__(self):
         super().__init__()
 
+        reg_ex = QRegExp("[0-9.]{200}")
+
         self.l1 = QLineEdit()
+        self.l1.setValidator(QRegExpValidator(reg_ex, self.l1))
         self.l2 = QLineEdit()
+        self.l2.setValidator(QRegExpValidator(reg_ex, self.l2))
         self.v1 = QLineEdit()
+        self.v1.setValidator(QRegExpValidator(reg_ex, self.v1))
         self.v11 = QLineEdit()
+        self.v11.setValidator(QRegExpValidator(reg_ex, self.v11))
         self.v2 = QLineEdit()
+        self.v2.setValidator(QRegExpValidator(reg_ex, self.v2))
         self.v22 = QLineEdit()
+        self.v22.setValidator(QRegExpValidator(reg_ex, self.v22))
         self.t11 = QLabel('-')
         self.t22 = QLabel('-')
         self.T11 = QLabel('-')
@@ -186,15 +220,23 @@ class AdvancedCalculator(QWidget):
             t22 = l1/(v2/60)+l2/(v22/60)
             T11 = t11 + t22 + 2
             T22 = t11 + t22 + 3
+            self.t11.setStyleSheet('color: black')
+            self.t22.setStyleSheet('color: black')
+            self.T11.setStyleSheet('color: black')
+            self.T22.setStyleSheet('color: black')
             self.t11.setText(str(round(t11, 2)))
             self.t22.setText(str(round(t22, 2)))
             self.T11.setText(str(round(T11, 2)))
             self.T22.setText(str(round(T22, 2)))
         except Exception as e:
-            self.t11.setText('Wrong Input')
-            self.t22.setText('Wrong Input')
-            self.T11.setText('Wrong Input')
-            self.T22.setText('Wrong Input')
+            self.t11.setStyleSheet('color: red')
+            self.t22.setStyleSheet('color: red')
+            self.T11.setStyleSheet('color: red')
+            self.T22.setStyleSheet('color: red')
+            self.t11.setText('Некорректный ввод')
+            self.t22.setText('Некорректный ввод')
+            self.T11.setText('Некорректный ввод')
+            self.T22.setText('Некорректный ввод')
 
     def clear_action(self):
         self.l1.clear()
@@ -203,6 +245,10 @@ class AdvancedCalculator(QWidget):
         self.v11.clear()
         self.v2.clear()
         self.v22.clear()
+        self.t11.setStyleSheet('color: black')
+        self.t22.setStyleSheet('color: black')
+        self.T11.setStyleSheet('color: black')
+        self.T22.setStyleSheet('color: black')
         self.t11.setText('-')
         self.t22.setText('-')
         self.T11.setText('-')
